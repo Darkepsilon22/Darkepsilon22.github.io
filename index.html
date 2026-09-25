@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Aina Yohan Rakotoarison — Full Stack Developer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="css/nocturne.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<script src="js/nocturne-bundle.js"></script>
+<script src="js/image-slot.js"></script>
+<style>
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased;
+  background: radial-gradient(1200px 720px at 82% -160px, color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%), var(--color-bg); }
+a { color: var(--color-text); text-decoration: none; }
+a:hover { color: var(--color-accent); }
+</style>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;right:0;z-index:50;background:color-mix(in srgb, var(--color-bg) 78%, transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid {{ navBorder }};transition:border-color 300ms ease">
+  <nav class="nav" style="max-width:1200px;margin:0 auto;padding:14px clamp(20px,5vw,72px);gap:20px">
+    <a href="#home" class="nav-brand" style="display:flex;align-items:center;gap:10px;font-size:15px;color:var(--color-text)">
+      <span style="display:grid;place-items:center;width:30px;height:30px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-accent);color:var(--color-accent);font-size:12px;letter-spacing:0.04em">AY</span>
+      <span style="white-space:nowrap">Aina Yohan R.</span>
+    </a>
+    <sc-if value="{{ desktopNav }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:22px">
+        <a href="#home" aria-current="{{ cur.home }}" style="transition:color 200ms;white-space:nowrap">{{ t.k0 }}</a>
+        <a href="#about" aria-current="{{ cur.about }}" style="transition:color 200ms;white-space:nowrap">{{ t.k1 }}</a>
+        <a href="#stack" aria-current="{{ cur.stack }}" style="transition:color 200ms;white-space:nowrap">{{ t.k2 }}</a>
+        <a href="#work" aria-current="{{ cur.work }}" style="transition:color 200ms;white-space:nowrap">{{ t.k3 }}</a>
+        <a href="#experience" aria-current="{{ cur.experience }}" style="transition:color 200ms;white-space:nowrap">{{ t.k4 }}</a>
+        <a href="#contact" aria-current="{{ cur.contact }}" style="transition:color 200ms;white-space:nowrap">Contact</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px"><div role="group" aria-label="Language" style="display:flex;padding:2px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-divider);font-size:12px;letter-spacing:0.06em"><button type="button" onClick="{{ setEn }}" aria-pressed="{{ enOn }}" style="border:0;cursor:pointer;font:inherit;padding:6px 9px;border-radius:6px;color:{{ enColor }};background:{{ enBg }};transition:background 200ms, color 200ms">EN</button><button type="button" onClick="{{ setFr }}" aria-pressed="{{ frOn }}" style="border:0;cursor:pointer;font:inherit;padding:6px 9px;border-radius:6px;color:{{ frColor }};background:{{ frBg }};transition:background 200ms, color 200ms">FR</button></div><button type="button" class="btn btn-secondary btn-icon" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" onClick="{{ toggleTheme }}" style="width:36px;height:36px;font-size:17px;color:var(--color-text);flex-shrink:0"><i class="{{ themeIcon }}"></i></button></div>
+      <button type="button" onClick="{{ openCv }}" class="btn btn-ghost" style="white-space:nowrap;flex-shrink:0;font-size:14px;gap:6px"><i class="ph ph-file-text"></i>CV</button>
+      <a href="#contact" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;font-size:14px">{{ t.k5 }} <i class="ph ph-arrow-right"></i></a>
+    </sc-if>
+    <sc-if value="{{ mobileNav }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:8px"><button type="button" class="btn btn-secondary btn-icon" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" onClick="{{ toggleTheme }}" style="width:44px;height:44px;font-size:17px;color:var(--color-text);flex-shrink:0"><i class="{{ themeIcon }}"></i></button><button type="button" class="btn btn-secondary btn-icon" aria-label="Open menu" onClick="{{ toggleMenu }}" style="width:44px;height:44px;font-size:20px"><i class="{{ menuIcon }}"></i></button></div>
+    </sc-if>
+  </nav>
+</div>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:40;background:var(--color-bg);padding:96px 24px 32px;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;flex-direction:column">
+      <a href="#home" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--color-divider);font-size:32px;letter-spacing:-0.02em"><span>{{ t.k0 }}</span><span style="font-size:13px;color:var(--color-neutral-500)">01</span></a>
+      <a href="#about" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--color-divider);font-size:32px;letter-spacing:-0.02em"><span>{{ t.k1 }}</span><span style="font-size:13px;color:var(--color-neutral-500)">02</span></a>
+      <a href="#stack" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--color-divider);font-size:32px;letter-spacing:-0.02em"><span>{{ t.k2 }}</span><span style="font-size:13px;color:var(--color-neutral-500)">03</span></a>
+      <a href="#work" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--color-divider);font-size:32px;letter-spacing:-0.02em"><span>{{ t.k3 }}</span><span style="font-size:13px;color:var(--color-neutral-500)">04</span></a>
+      <a href="#experience" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--color-divider);font-size:32px;letter-spacing:-0.02em"><span>{{ t.k4 }}</span><span style="font-size:13px;color:var(--color-neutral-500)">05</span></a>
+      <a href="#contact" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--color-divider);font-size:32px;letter-spacing:-0.02em"><span>Contact</span><span style="font-size:13px;color:var(--color-neutral-500)">06</span></a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <a href="#contact" onClick="{{ closeMenu }}" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:52px;font-size:16px">{{ t.k5 }} <i class="ph ph-arrow-right"></i></a>
+      <button type="button" onClick="{{ openCv }}" class="btn btn-secondary" style="min-height:52px;font-size:16px;color:var(--color-text);gap:8px"><i class="ph ph-file-text"></i>{{ t.cvView }}</button>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span style="font-size:13px;color:var(--color-neutral-500)">{{ langLabel }}</span><div role="group" aria-label="Language" style="display:flex;padding:2px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-divider);font-size:14px;letter-spacing:0.06em"><button type="button" onClick="{{ setEn }}" aria-pressed="{{ enOn }}" style="border:0;cursor:pointer;font:inherit;padding:10px 16px;border-radius:6px;color:{{ enColor }};background:{{ enBg }};transition:background 200ms, color 200ms">EN</button><button type="button" onClick="{{ setFr }}" aria-pressed="{{ frOn }}" style="border:0;cursor:pointer;font:inherit;padding:10px 16px;border-radius:6px;color:{{ frColor }};background:{{ frBg }};transition:background 200ms, color 200ms">FR</button></div></div>
+      <div style="display:flex;gap:20px;font-size:14px;color:var(--color-neutral-400)"><a href="https://github.com/Darkepsilon22" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/yohan-rakotoarison-318266271" target="_blank" rel="noopener">LinkedIn</a><a href="mailto:yohanrak61@gmail.com">Email</a><a href="https://wa.me/261340903187" target="_blank" rel="noopener">WhatsApp</a></div>
+    </div>
+  </div>
+</sc-if>
+
+<section id="home" data-screen-label="Hero" style="position:relative;overflow:hidden;scroll-margin-top:72px">
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(to right, color-mix(in srgb, var(--color-text) 5%, transparent) 1px, transparent 1px),linear-gradient(to bottom, color-mix(in srgb, var(--color-text) 5%, transparent) 1px, transparent 1px);background-size:72px 72px;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 70% 30%, black 10%, transparent 75%);mask-image:radial-gradient(ellipse 70% 70% at 70% 30%, black 10%, transparent 75%)"></div>
+  <div style="position:relative;max-width:1200px;margin:0 auto;padding:clamp(120px,18vh,180px) clamp(20px,5vw,72px) clamp(72px,10vh,120px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(40px,6vw,88px);align-items:end">
+    <div style="display:flex;flex-direction:column;gap:28px;grid-column:1 / -1;max-width:980px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-accent)"><span style="width:28px;height:1px;background:var(--color-accent)"></span>{{ t.k6 }}</div>
+      <h1 style="margin:0;margin-left:-0.05em;font-family:var(--font-heading);font-weight:500;font-size:clamp(48px,9.2vw,128px);line-height:0.98;letter-spacing:-0.035em;color:var(--color-text)"><span style="display:block">Aina Yohan</span><span style="display:block;color:var(--color-neutral-400)">Rakotoarison</span></h1>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;max-width:560px">
+      <p style="margin:0;font-size:clamp(22px,2.2vw,28px);line-height:1.3;letter-spacing:-0.015em;color:var(--color-text)">{{ t.k7 }}</p>
+      <p style="margin:0;font-size:16px;line-height:1.65;color:var(--color-neutral-400)">{{ t.k8 }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:4px">
+        <a href="#work" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:44px;padding-inline:18px;font-size:15px;transition:background 200ms, transform 200ms" style-active="transform:translateY(1px)">{{ t.k9 }} <i class="ph ph-arrow-down"></i></a>
+        <a href="#contact" class="btn btn-secondary" style="white-space:nowrap;flex-shrink:0;min-height:44px;padding-inline:18px;font-size:15px;color:var(--color-text)">{{ t.k10 }}</a>
+        <button type="button" onClick="{{ openCv }}" class="btn btn-ghost" style="white-space:nowrap;flex-shrink:0;min-height:44px;padding-inline:14px;font-size:15px;gap:8px;color:var(--color-neutral-300)"><i class="ph ph-file-text"></i>{{ t.cvView }}</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px 22px;font-size:14px;color:var(--color-neutral-400);margin-top:4px">
+        <a href="https://github.com/Darkepsilon22" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)"><i class="ph ph-github-logo" style="font-size:17px"></i>GitHub</a>
+        <a href="https://www.linkedin.com/in/yohan-rakotoarison-318266271" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)"><i class="ph ph-linkedin-logo" style="font-size:17px"></i>LinkedIn</a>
+        <a href="mailto:yohanrak61@gmail.com" style="display:flex;align-items:center;gap:7px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)"><i class="ph ph-envelope-simple" style="font-size:17px"></i>Email</a>
+        <a href="https://wa.me/261340903187" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:7px;color:var(--color-neutral-400)" style-hover="color:var(--color-accent)"><i class="ph ph-whatsapp-logo" style="font-size:17px"></i>WhatsApp</a>
+      </div>
+    </div>
+    <div data-reveal="" style="border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 82%, transparent);box-shadow:var(--shadow-md);overflow:hidden;font-family:ui-monospace, SFMono-Regular, Menlo, monospace;font-size:clamp(11.5px,1.05vw,13px);line-height:1.8">
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--color-divider);color:var(--color-neutral-500)">
+        <span style="width:9px;height:9px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="width:9px;height:9px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="width:9px;height:9px;border-radius:50%;background:var(--color-neutral-700)"></span>
+        <span style="margin-left:8px;white-space:nowrap">~/portfolio — zsh</span>
+      </div>
+      <div style="padding:16px 18px 18px;overflow-x:auto;white-space:pre;color:var(--color-neutral-400)"><div><span style="color:var(--color-accent)">$</span> <span style="color:var(--color-text)">curl</span> /api/projects</div><div style="color:var(--color-neutral-600)">HTTP/1.1 200 OK · application/json</div><div>[</div><div>  { <span style="color:var(--color-neutral-300)">"name"</span>: <span style="color:var(--color-accent-300)">"Heaven Sound"</span>,  <span style="color:var(--color-neutral-300)">"type"</span>: <span style="color:var(--color-accent-300)">"web"</span> },</div><div>  { <span style="color:var(--color-neutral-300)">"name"</span>: <span style="color:var(--color-accent-300)">"Smar’ket"</span>,       <span style="color:var(--color-neutral-300)">"type"</span>: <span style="color:var(--color-accent-300)">"mern"</span> },</div><div>  { <span style="color:var(--color-neutral-300)">"name"</span>: <span style="color:var(--color-accent-300)">"Local AI Docs"</span>, <span style="color:var(--color-neutral-300)">"type"</span>: <span style="color:var(--color-accent-300)">"rag"</span> },</div><div>  { <span style="color:var(--color-neutral-300)">"name"</span>: <span style="color:var(--color-accent-300)">"StreamYo"</span>,  <span style="color:var(--color-neutral-300)">"type"</span>: <span style="color:var(--color-accent-300)">"desktop"</span> },</div><div>  { <span style="color:var(--color-neutral-300)">"name"</span>: <span style="color:var(--color-accent-300)">"Tatitra"</span>,       <span style="color:var(--color-neutral-300)">"type"</span>: <span style="color:var(--color-accent-300)">"mobile"</span> }</div><div>]</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" data-screen-label="About" style="scroll-margin-top:72px">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(72px,10vw,128px) clamp(20px,5vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,5vw,72px)">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent)"><span style="width:28px;height:1px;background:var(--color-accent)"></span>{{ t.k12 }}</div>
+      <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.04;letter-spacing:-0.025em">{{ t.k13 }}</h2>
+    </div>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:28px;grid-column:span 2;max-width:680px">
+      <p style="margin:0;font-size:clamp(19px,1.8vw,23px);line-height:1.5;letter-spacing:-0.01em;color:var(--color-text)">{{ t.k14 }}</p>
+      <p style="margin:0;font-size:16px;line-height:1.7;color:var(--color-neutral-400)">{{ t.k15 }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span class="tag tag-accent" style="font-size:13px;padding:6px 12px">{{ t.k16 }}</span>
+        <span class="tag tag-accent" style="font-size:13px;padding:6px 12px">{{ t.k17 }}</span>
+        <span class="tag tag-neutral" style="font-size:13px;padding:6px 12px">Web</span>
+        <span class="tag tag-neutral" style="font-size:13px;padding:6px 12px">Mobile</span>
+        <span class="tag tag-neutral" style="font-size:13px;padding:6px 12px">Desktop</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" data-screen-label="Tech Stack" style="scroll-margin-top:72px">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,72px) clamp(72px,10vw,128px)">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:clamp(32px,4vw,56px)">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent)"><span style="width:28px;height:1px;background:var(--color-accent)"></span>{{ t.k18 }}</div>
+        <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.04;letter-spacing:-0.025em">{{ t.k19 }}</h2>
+      </div>
+      <p style="margin:0;max-width:340px;font-size:15px;line-height:1.6;color:var(--color-neutral-400)">{{ t.k20 }}</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px">
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 60%, transparent);box-shadow:var(--shadow-sm);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:var(--shadow-md);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>Frontend</span><span>04</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>Angular</span><span>TypeScript</span><span>React</span><span>HTML / CSS</span></div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 60%, transparent);box-shadow:var(--shadow-sm);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:var(--shadow-md);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>Backend</span><span>04</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>Node.js</span><span>Express</span><span>Python</span><span>Java</span></div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 60%, transparent);box-shadow:var(--shadow-sm);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:var(--shadow-md);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>{{ t.k21 }}</span><span>06</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>PostgreSQL</span><span>MongoDB</span><span>MySQL</span><span>Oracle</span><span>Firestore</span><span>SQLite</span></div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-accent-900) 70%, transparent);box-shadow:0 0 0 1px var(--color-accent-800);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 6px 18px rgba(0,0,0,0.55);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-300)"><span>{{ t.k22 }}</span><span>06</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>RAG</span><span>LangChain</span><span>Ollama</span><span>ChromaDB</span><span>{{ t.k24 }}</span><span>Prompt Engineering</span></div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 60%, transparent);box-shadow:var(--shadow-sm);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:var(--shadow-md);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>Mobile</span><span>02</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>Kotlin</span><span>Jetpack Compose</span></div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 60%, transparent);box-shadow:var(--shadow-sm);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:var(--shadow-md);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>Desktop</span><span>02</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>Python</span><span>PyQt6</span></div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:22px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 60%, transparent);box-shadow:var(--shadow-sm);transition:box-shadow 250ms, transform 250ms" style-hover="box-shadow:var(--shadow-md);transform:translateY(-2px)">
+        <div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>{{ t.k23 }}</span><span>05</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:17px;color:var(--color-text)"><span>Git</span><span>GitHub</span><span>REST API</span><span>UML</span><span>MVC</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work" data-screen-label="Selected Work" style="scroll-margin-top:72px">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,72px) clamp(40px,6vw,80px)">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:clamp(40px,6vw,88px)">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent)"><span style="width:28px;height:1px;background:var(--color-accent)"></span>{{ t.k25 }}</div>
+        <h2 style="margin:0;font-weight:500;font-size:clamp(40px,6.4vw,88px);line-height:1;letter-spacing:-0.035em">{{ t.k26 }}</h2>
+      </div>
+      <p style="margin:0;max-width:360px;font-size:15px;line-height:1.6;color:var(--color-neutral-400)">{{ t.k27 }}</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:clamp(72px,10vw,144px)">
+
+      <article data-reveal="" style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,64px);align-items:center">
+        <div style="flex:1 1 560px;min-width:min(100%,320px);border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+          <div style="display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--color-divider)"><span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="margin-left:10px;font-size:12px;color:var(--color-neutral-500)">heavensound.mg</span></div>
+          <div style="aspect-ratio:16 / 9;position:relative"><image-slot id="work-heavensound" shape="rect" src="assets/heavensound-hero.png" placeholder="Drop a screenshot of heavensound.mg"></image-slot></div>
+        </div>
+        <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px;max-width:460px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span style="color:var(--color-accent)">01</span><span>{{ t.k28 }}</span></div>
+          <h3 style="margin:0;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.05;letter-spacing:-0.025em">Heaven Sound</h3>
+          <p style="margin:0;font-size:16px;line-height:1.65;color:var(--color-neutral-400)">{{ t.k29 }}</p>
+          <div style="display:grid;grid-template-columns:80px 1fr;gap:6px 16px;font-size:14px;line-height:1.5"><span style="color:var(--color-neutral-500)">{{ t.k30 }}</span><span>{{ t.k31 }}</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px"><span class="tag tag-neutral">Angular</span><span class="tag tag-neutral">TypeScript</span><span class="tag tag-neutral">Node.js</span><span class="tag tag-neutral">Express</span><span class="tag tag-neutral">Prisma</span><span class="tag tag-neutral">PostgreSQL</span><span class="tag tag-neutral">Firebase</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+            <a href="case-study.html?p=heaven-sound" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px">{{ t.k32 }} <i class="ph ph-arrow-right"></i></a>
+            <a href="https://heavensound.mg/" target="_blank" rel="noopener" class="btn btn-secondary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px;color:var(--color-text)">{{ t.k33 }} <i class="ph ph-arrow-up-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <article data-reveal="" style="display:flex;flex-wrap:wrap-reverse;flex-direction:row-reverse;gap:clamp(28px,4vw,64px);align-items:center">
+        <div style="flex:1 1 560px;min-width:min(100%,320px);position:relative">
+          <div style="border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+            <div style="display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--color-divider)"><span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--color-neutral-700)"></span><span style="margin-left:10px;font-size:12px;color:var(--color-neutral-500)">smarket.qzz.io</span></div>
+            <div style="aspect-ratio:16 / 9;position:relative"><image-slot id="work-smarket" shape="rect" src="assets/smarket-landing.png" placeholder="Drop a screenshot of the Smar’ket dashboard"></image-slot></div>
+          </div>
+        </div>
+        <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px;max-width:460px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span style="color:var(--color-accent)">02</span><span>{{ t.k34 }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <h3 style="margin:0;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.05;letter-spacing:-0.025em">Smar’ket</h3>
+            <p style="margin:0;font-size:18px;color:var(--color-neutral-300)">{{ t.k35 }}</p>
+          </div>
+          <p style="margin:0;font-size:16px;line-height:1.65;color:var(--color-neutral-400)">{{ t.k36 }}</p>
+          <div style="display:grid;grid-template-columns:80px 1fr;gap:10px 16px;font-size:14px;line-height:1.5">
+            <span style="color:var(--color-neutral-500)">{{ t.k30 }}</span><span>{{ t.k37 }}</span>
+            <span style="color:var(--color-neutral-500)">{{ t.k38 }}</span><span>{{ t.k39 }}</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px"><span class="tag tag-neutral">MongoDB</span><span class="tag tag-neutral">Express.js</span><span class="tag tag-neutral">React</span><span class="tag tag-neutral">Node.js</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+            <a href="case-study.html?p=smarket" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px">{{ t.k40 }} <i class="ph ph-arrow-right"></i></a>
+            <a href="https://www.smarket.qzz.io/" target="_blank" rel="noopener" class="btn btn-secondary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px;color:var(--color-text)">{{ t.k41 }} <i class="ph ph-arrow-up-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <article data-reveal="" style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,64px);align-items:center">
+        <div style="flex:1 1 560px;min-width:min(100%,320px);display:flex;flex-direction:column;gap:12px">
+          <div style="border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+            <div style="aspect-ratio:16 / 9;position:relative"><image-slot id="work-local-ai" shape="rect" src="assets/local-ai-rag.png" placeholder="Drop a screenshot of the RAG assistant"></image-slot></div>
+          </div>
+          <div style="border-radius:var(--radius-lg);background:radial-gradient(600px 300px at 90% 0%, color-mix(in srgb, var(--color-accent-900) 90%, transparent), transparent 70%), var(--color-surface);box-shadow:var(--shadow-sm);padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:22px;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)">{{ t.k42 }}</span>
+            <span class="tag tag-outline" style="display:flex;gap:6px"><i class="ph ph-lock-simple"></i>{{ t.k43 }}</span>
+          </div>
+          <div style="padding:12px 14px;border-radius:var(--radius-md);background:var(--color-bg);box-shadow:var(--shadow-sm);font-size:14px;color:var(--color-neutral-300);display:flex;gap:10px;align-items:center"><i class="ph ph-magnifying-glass" style="color:var(--color-neutral-500)"></i><span>{{ t.k44 }}</span></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;font-size:13px">
+            <div style="padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px"><span style="color:var(--color-accent);font-family:ui-monospace, monospace">01</span><span style="color:var(--color-text)">{{ t.k45 }}</span><span style="color:var(--color-neutral-500)">PDF · TXT · MD</span></div>
+            <div style="padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px"><span style="color:var(--color-accent);font-family:ui-monospace, monospace">02</span><span style="color:var(--color-text)">{{ t.k46 }}</span><span style="color:var(--color-neutral-500)">LangChain</span></div>
+            <div style="padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px"><span style="color:var(--color-accent);font-family:ui-monospace, monospace">03</span><span style="color:var(--color-text)">{{ t.k47 }}</span><span style="color:var(--color-neutral-500)">{{ t.k48 }}</span></div>
+            <div style="padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px"><span style="color:var(--color-accent);font-family:ui-monospace, monospace">04</span><span style="color:var(--color-text)">{{ t.k49 }}</span><span style="color:var(--color-neutral-500)">ChromaDB</span></div>
+            <div style="padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px"><span style="color:var(--color-accent);font-family:ui-monospace, monospace">05</span><span style="color:var(--color-text)">{{ t.k50 }}</span><span style="color:var(--color-neutral-500)">Ollama</span></div>
+            <div style="padding:12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-accent-700);background:color-mix(in srgb, var(--color-accent-900) 60%, transparent);display:flex;flex-direction:column;gap:6px"><span style="color:var(--color-accent);font-family:ui-monospace, monospace">06</span><span style="color:var(--color-text)">{{ t.k51 }}</span><span style="color:var(--color-accent-300)">{{ t.k52 }}</span></div>
+          </div>
+        </div>
+        </div>
+        <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px;max-width:460px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span style="color:var(--color-accent)">03</span><span>{{ t.k53 }}</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <h3 style="margin:0;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.05;letter-spacing:-0.025em">{{ t.k54 }}</h3>
+            <p style="margin:0;font-size:18px;color:var(--color-neutral-300)">{{ t.k55 }}</p>
+          </div>
+          <p style="margin:0;font-size:16px;line-height:1.65;color:var(--color-neutral-400)">{{ t.k56 }}</p>
+          <div style="display:grid;grid-template-columns:80px 1fr;gap:6px 16px;font-size:14px;line-height:1.5"><span style="color:var(--color-neutral-500)">{{ t.k30 }}</span><span>{{ t.k57 }}</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px"><span class="tag tag-neutral">Python</span><span class="tag tag-accent">LangChain</span><span class="tag tag-accent">ChromaDB</span><span class="tag tag-accent">Ollama</span><span class="tag tag-neutral">Streamlit</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+            <a href="case-study.html?p=local-ai" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px">{{ t.k40 }} <i class="ph ph-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <article data-reveal="" style="display:flex;flex-wrap:wrap-reverse;flex-direction:row-reverse;gap:clamp(28px,4vw,64px);align-items:center">
+        <div style="flex:1 1 560px;min-width:min(100%,320px);display:flex;flex-direction:column;gap:12px">
+          <div style="border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+            <div style="aspect-ratio:16 / 9;position:relative"><image-slot id="work-media-client" shape="rect" src="assets/media-client.png" placeholder="Drop a screenshot of the desktop app"></image-slot></div>
+          </div>
+          <div style="border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:10px;font-size:13px;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+          <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>Architecture</span><span>PyQt6 · MVC</span></div>
+          <div style="display:grid;grid-template-columns:minmax(70px,90px) 1fr;gap:12px;align-items:center">
+            <span style="color:var(--color-neutral-500)">Interface</span>
+            <div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">{{ t.k58 }}</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">{{ t.k59 }}</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">Pagination</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-accent-700);color:var(--color-accent-300)">{{ t.k60 }}</span></div>
+          </div>
+          <div style="height:1px;background:linear-gradient(to right, transparent, var(--color-divider) 48px calc(100% - 48px), transparent)"></div>
+          <div style="display:grid;grid-template-columns:minmax(70px,90px) 1fr;gap:12px;align-items:center">
+            <span style="color:var(--color-neutral-500)">Services</span>
+            <div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">{{ t.k61 }}</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">{{ t.k62 }}</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">Cache</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">{{ t.k63 }}</span></div>
+          </div>
+          <div style="height:1px;background:linear-gradient(to right, transparent, var(--color-divider) 48px calc(100% - 48px), transparent)"></div>
+          <div style="display:grid;grid-template-columns:minmax(70px,90px) 1fr;gap:12px;align-items:center">
+            <span style="color:var(--color-neutral-500)">{{ t.k64 }}</span>
+            <div style="display:flex;flex-wrap:wrap;gap:6px"><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">{{ t.k65 }}</span><span style="padding:9px 12px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800)">SQLite (local)</span></div>
+          </div>
+        </div>
+        </div>
+        <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px;max-width:460px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span style="color:var(--color-accent)">04</span><span>{{ t.k66 }}</span></div>
+          <h3 style="margin:0;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.05;letter-spacing:-0.025em">{{ t.k67 }}</h3>
+          <p style="margin:0;font-size:16px;line-height:1.65;color:var(--color-neutral-400)">{{ t.k68 }}</p>
+          <div style="display:grid;grid-template-columns:80px 1fr;gap:6px 16px;font-size:14px;line-height:1.5"><span style="color:var(--color-neutral-500)">{{ t.k30 }}</span><span>{{ t.k69 }}</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px"><span class="tag tag-neutral">Python</span><span class="tag tag-neutral">PyQt6</span><span class="tag tag-neutral">SQLite</span><span class="tag tag-neutral">libVLC</span><span class="tag tag-neutral">HTTP / API</span><span class="tag tag-neutral">Reverse engineering</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+            <a href="case-study.html?p=media-client" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px">{{ t.k40 }} <i class="ph ph-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <article data-reveal="" style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,64px);align-items:center">
+        <div style="flex:1 1 560px;min-width:min(100%,320px);display:flex;flex-direction:column;gap:12px">
+          <div style="border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);overflow:hidden;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+            <div style="aspect-ratio:16 / 9;position:relative"><image-slot id="work-tatitra" shape="rect" src="assets/tatitra-hero.png" placeholder="Drop Tatitra app screens"></image-slot></div>
+          </div>
+          <div style="border-radius:var(--radius-lg);background:var(--color-surface);box-shadow:var(--shadow-sm);padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;align-items:center;font-size:13px;transition:box-shadow 300ms, transform 300ms cubic-bezier(.2,.7,.2,1)" style-hover="box-shadow:0 0 0 1px var(--color-accent-700), 0 16px 40px rgba(0,0,0,0.55);transform:translateY(-4px)">
+          <div style="align-self:stretch;display:flex;justify-content:space-between;margin-bottom:28px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span>{{ t.k70 }}</span><span>MVVM · Offline-first</span></div>
+          <div style="display:flex;align-items:center;width:100%">
+            <div style="flex:1;padding:14px 10px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center"><i class="ph ph-device-mobile" style="font-size:22px;color:var(--color-accent)"></i><span>{{ t.k71 }}</span><span style="color:var(--color-neutral-500);font-size:12px">Kotlin · Compose</span></div>
+            <div style="width:clamp(12px,4vw,40px);height:1px;background:var(--color-accent-700)"></div>
+            <div style="flex:1;padding:14px 10px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-accent-700);background:color-mix(in srgb, var(--color-accent-900) 60%, transparent);display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center"><i class="ph ph-plugs-connected" style="font-size:22px;color:var(--color-accent)"></i><span>REST API</span><span style="color:var(--color-accent-300);font-size:12px">Node · Express</span></div>
+            <div style="width:clamp(12px,4vw,40px);height:1px;background:var(--color-accent-700)"></div>
+            <div style="flex:1;padding:14px 10px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center"><i class="ph ph-layout" style="font-size:22px;color:var(--color-accent)"></i><span>Admin</span><span style="color:var(--color-neutral-500);font-size:12px">React</span></div>
+          </div>
+          <div style="width:1px;height:32px;background:var(--color-accent-700)"></div>
+          <div style="width:34%;min-width:110px;padding:14px 10px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-neutral-800);display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center"><i class="ph ph-database" style="font-size:22px;color:var(--color-accent)"></i><span>{{ t.k72 }}</span><span style="color:var(--color-neutral-500);font-size:12px">PostgreSQL · Supabase</span></div>
+          <div style="align-self:stretch;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:28px;color:var(--color-neutral-400);font-size:12px"><span>Room</span><span style="color:var(--color-neutral-700)">·</span><span>WorkManager</span><span style="color:var(--color-neutral-700)">·</span><span>{{ t.k73 }}</span><span style="color:var(--color-neutral-700)">·</span><span>{{ t.k74 }}</span></div>
+        </div>
+        </div>
+        <div style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px;max-width:460px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)"><span style="color:var(--color-accent)">05</span><span>Mobile · Backend · Admin</span></div>
+          <h3 style="margin:0;font-weight:500;font-size:clamp(32px,3.6vw,48px);line-height:1.05;letter-spacing:-0.025em">TATITRA</h3>
+          <p style="margin:0;font-size:16px;line-height:1.65;color:var(--color-neutral-400)">{{ t.k75 }}</p>
+          <div style="display:grid;grid-template-columns:80px 1fr;gap:10px 16px;font-size:14px;line-height:1.5">
+            <span style="color:var(--color-neutral-500)">{{ t.k30 }}</span><span>{{ t.k76 }}</span>
+            <span style="color:var(--color-neutral-500)">{{ t.k77 }}</span><span>{{ t.k78 }}</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px"><span class="tag tag-neutral">Kotlin</span><span class="tag tag-neutral">Jetpack Compose</span><span class="tag tag-neutral">Node.js</span><span class="tag tag-neutral">Express</span><span class="tag tag-neutral">PostgreSQL</span><span class="tag tag-neutral">Supabase</span><span class="tag tag-neutral">React</span></div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+            <a href="case-study.html?p=tatitra" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px">{{ t.k40 }} <i class="ph ph-arrow-right"></i></a>
+            <a href="https://github.com/LoicLooney/Tatitra-app" target="_blank" rel="noopener" class="btn btn-secondary" style="white-space:nowrap;flex-shrink:0;min-height:40px;padding-inline:16px;color:var(--color-text)"><i class="ph ph-github-logo"></i> GitHub</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience" data-screen-label="Experience" style="scroll-margin-top:72px">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(72px,10vw,144px) clamp(20px,5vw,72px) clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,5vw,72px)">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent)"><span style="width:28px;height:1px;background:var(--color-accent)"></span>{{ t.k79 }}</div>
+      <h2 style="margin:0;font-weight:500;font-size:clamp(34px,4.4vw,56px);line-height:1.04;letter-spacing:-0.025em">{{ t.k4 }}</h2>
+    </div>
+    <div data-reveal="" style="grid-column:span 2;display:flex;flex-direction:column">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:6px 24px;padding:24px 0;border-top:1px solid var(--color-divider)">
+        <span style="font-size:14px;color:var(--color-neutral-500);font-feature-settings:'tnum' 1">{{ t.k80 }}</span>
+        <div style="display:flex;flex-direction:column;gap:4px;grid-column:span 2"><span style="font-size:20px;letter-spacing:-0.01em">Heaven Sound</span><span style="font-size:15px;color:var(--color-neutral-400)">{{ t.k6 }}</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:6px 24px;padding:24px 0;border-top:1px solid var(--color-divider)">
+        <span style="font-size:14px;color:var(--color-neutral-500);font-feature-settings:'tnum' 1">{{ t.k81 }}</span>
+        <div style="display:flex;flex-direction:column;gap:4px;grid-column:span 2"><span style="font-size:20px;letter-spacing:-0.01em">IT University</span><span style="font-size:15px;color:var(--color-neutral-400)">{{ t.k82 }}</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:6px 24px;padding:24px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)">
+        <span style="font-size:14px;color:var(--color-neutral-500);font-feature-settings:'tnum' 1">2026</span>
+        <div style="display:flex;flex-direction:column;gap:4px;grid-column:span 2"><span style="font-size:20px;letter-spacing:-0.01em">{{ t.k83 }}</span><span style="font-size:15px;color:var(--color-neutral-400)">{{ t.k84 }}</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Education" style="scroll-margin-top:72px">
+  <div data-reveal="" style="max-width:1200px;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(20px,5vw,72px) clamp(72px,10vw,128px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,5vw,72px)">
+    <span style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-neutral-500)">{{ t.k85 }}</span>
+    <div style="display:flex;flex-direction:column;gap:14px;font-size:15px;line-height:1.5">
+      <span style="color:var(--color-neutral-500);font-size:13px">IT University</span>
+      <div style="display:flex;justify-content:space-between;gap:16px"><span>{{ t.k86 }}</span><span style="color:var(--color-neutral-500)">2026</span></div>
+      <div style="display:flex;justify-content:space-between;gap:16px"><span>Master 1 MBDS</span><span style="color:var(--color-neutral-500)">2026</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;font-size:15px;line-height:1.5">
+      <span style="color:var(--color-neutral-500);font-size:13px">Certifications</span>
+      <span>AI-Powered SEO Audit</span>
+      <span>Introduction to Software Engineering</span>
+      <span>Claude Academy Certification</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact" data-screen-label="Contact" style="scroll-margin-top:72px;background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section)">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(80px,12vw,160px) clamp(20px,5vw,72px) clamp(56px,8vw,96px);display:flex;flex-direction:column;gap:32px">
+    <div data-reveal="" style="display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-300)"><span style="width:28px;height:1px;background:var(--color-accent-300)"></span>05 — Contact</div>
+    <h2 data-reveal="" style="margin:0;margin-left:-0.04em;font-weight:500;font-size:clamp(44px,8vw,112px);line-height:1;letter-spacing:-0.035em;max-width:11ch">{{ t.k87 }}</h2>
+    <p data-reveal="" style="margin:0;max-width:520px;font-size:clamp(17px,1.6vw,20px);line-height:1.55;color:var(--color-neutral-300)">{{ t.k88 }}</p>
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px">
+      <a href="mailto:yohanrak61@gmail.com" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;min-height:52px;padding-inline:22px;font-size:16px;color:var(--color-accent-200);border-color:var(--color-accent-300)">{{ t.k11 }} <i class="ph ph-arrow-right"></i></a>
+    </div>
+    <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));column-gap:24px;margin-top:clamp(32px,6vw,72px);border-top:1px solid color-mix(in srgb, var(--color-text) 18%, transparent)">
+      <a href="mailto:yohanrak61@gmail.com" style="display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:17px;color:var(--color-text);transition:color 200ms, padding 250ms" style-hover="color:var(--color-accent-200);padding-left:6px"><span style="display:flex;gap:12px;align-items:center"><i class="ph ph-envelope-simple"></i>Email</span><i class="ph ph-arrow-up-right"></i></a>
+      <a href="https://www.linkedin.com/in/yohan-rakotoarison-318266271" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:17px;color:var(--color-text);transition:color 200ms, padding 250ms" style-hover="color:var(--color-accent-200);padding-left:6px"><span style="display:flex;gap:12px;align-items:center"><i class="ph ph-linkedin-logo"></i>LinkedIn</span><i class="ph ph-arrow-up-right"></i></a>
+      <a href="https://github.com/Darkepsilon22" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:17px;color:var(--color-text);transition:color 200ms, padding 250ms" style-hover="color:var(--color-accent-200);padding-left:6px"><span style="display:flex;gap:12px;align-items:center"><i class="ph ph-github-logo"></i>GitHub</span><i class="ph ph-arrow-up-right"></i></a>
+      <a href="https://wa.me/261340903187" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;align-items:center;padding:22px 0;font-size:17px;color:var(--color-text);transition:color 200ms, padding 250ms" style-hover="color:var(--color-accent-200);padding-left:6px"><span style="display:flex;gap:12px;align-items:center"><i class="ph ph-whatsapp-logo"></i><span style="display:flex;flex-direction:column;gap:2px">WhatsApp<span style="font-size:13px;white-space:nowrap;color:var(--color-neutral-400)">+261 34 09 031 87</span></span></span><i class="ph ph-arrow-up-right"></i></a>
+    </div>
+  </div>
+  <footer style="max-width:1200px;margin:0 auto;padding:28px clamp(20px,5vw,72px) 36px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:13px;color:var(--color-neutral-400);border-top:1px solid color-mix(in srgb, var(--color-text) 12%, transparent)">
+    <span>{{ t.k89 }}</span>
+    <span>© 2026</span>
+  </footer>
+</section>
+
+<sc-if value="{{ cvOpen }}" hint-placeholder-val="{{ false }}">
+  <div class="dialog-backdrop" onClick="{{ closeCv }}" style="position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:clamp(0px,3vw,32px);background:color-mix(in srgb, oklch(0.1 0.01 240) 72%, transparent);backdrop-filter:blur(6px)">
+    <div role="dialog" aria-modal="true" aria-label="CV" class="dialog" onClick="{{ stop }}" style="width:min(100%,920px);height:min(100%,1100px);max-width:none;padding:0;display:flex;flex-direction:column;overflow:hidden;border-radius:{{ cvRadius }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px 12px 20px;border-bottom:1px solid var(--color-divider)">
+        <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+          <span style="font-size:15px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">CV — Aina Yohan Rakotoarison</span>
+          <span style="font-size:12px;color:var(--color-neutral-500)">PDF</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <a href="assets/CV_Aina-Yohan_Rakotoarison.pdf" target="_blank" rel="noopener" class="btn btn-ghost" style="font-size:14px;gap:6px;white-space:nowrap" aria-label="{{ t.cvOpen }}"><i class="ph ph-arrow-square-out"></i><span style="display:{{ labelDisplay }}">{{ t.cvOpen }}</span></a>
+          <a href="assets/CV_Aina-Yohan_Rakotoarison.pdf" download="CV_Aina-Yohan_Rakotoarison.pdf" class="btn btn-primary" style="font-size:14px;gap:6px;white-space:nowrap"><i class="ph ph-download-simple"></i>{{ t.cvDownload }}</a>
+          <button type="button" onClick="{{ closeCv }}" class="btn btn-icon btn-ghost" aria-label="{{ t.cvClose }}" style="font-size:18px"><i class="ph ph-x"></i></button>
+        </div>
+      </div>
+      <iframe src="assets/CV_Aina-Yohan_Rakotoarison.pdf#view=FitH" title="CV — Aina Yohan Rakotoarison" style="flex:1;width:100%;border:0;background:var(--color-neutral-800)"></iframe>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const I18N = { en: {"cvView":"View my CV","cvOpen":"Open in a new tab","cvDownload":"Download","cvClose":"Close","k0":"Home","k1":"About","k2":"Skills","k3":"Projects","k4":"Experience","k5":"Let’s talk","k6":"Full Stack Developer","k7":"I build complete software — from the interface to the API, the database and the AI behind it.","k8":"Full Stack Developer building web, desktop and mobile applications, REST APIs and AI-powered solutions.","k9":"View my projects","k10":"Contact me","k11":"Contact me","k12":"01 — About","k13":"About me","k14":"I’m a Full Stack Developer passionate about software development, artificial intelligence and emerging technologies.","k15":"I enjoy designing complete solutions, from user interfaces and backend systems to databases, APIs and AI integrations.","k16":"Full Stack Development","k17":"AI & LLM","k18":"02 — Skills","k19":"Tech Stack","k20":"Grouped by layer — the tools I use to take a product from interface to infrastructure.","k21":"Databases","k22":"AI","k23":"Tools & Architecture","k24":"LLM integration","k25":"03 — Projects","k26":"Selected Work","k27":"Five projects across web, AI, desktop and mobile — each built end to end.","k28":"Website · Full Stack","k29":"A web project built from A to Z — responsible for both the development and the visual design of the site.","k30":"Role","k31":"Full Stack development & visual design","k32":"View project","k33":"Live site","k34":"Full Stack Platform","k35":"Shopping Center Management Platform","k36":"A MERN platform to run a shopping center — shops, products, users and orders behind one authenticated REST API.","k37":"Full Stack development","k38":"Scope","k39":"REST API · Authentication · Users · Shops · Products · Orders","k40":"View case study","k41":"Live demo","k42":"RAG pipeline","k43":"Runs 100% locally","k44":"Ask your documents a question…","k45":"Document extraction","k46":"Chunking","k47":"Multilingual embeddings","k48":"Vectors","k49":"Semantic search","k50":"LLM response","k51":"Source attribution","k52":"Cited passages","k53":"AI · RAG","k54":"Local AI Document Assistant","k55":"A private RAG-powered document assistant.","k56":"Query your own PDF, TXT and Markdown files in natural language — through a RAG architecture that runs entirely on your machine.","k57":"Design & development","k58":"PyQt6 views","k59":"Search & filters","k60":"libVLC player","k61":"Download manager","k62":"Parallel workers","k63":"Auto-update","k64":"Data","k65":"REST API client","k66":"Desktop · Reverse engineering","k67":"StreamYo","k68":"A Windows desktop client built after reverse engineering an Android app — its APK, network traffic and API. Python / PyQt6, libVLC player, resumable downloads, SQLite, local HTTP proxy and automatic updates.","k69":"Reverse engineering & desktop development","k70":"Ecosystem","k71":"Mobile App","k72":"Database","k73":"Data sync","k74":"Scheduled tasks","k75":"A citizen app for reporting damaged public infrastructure: an offline-first Android app, a REST API on PostgreSQL and a React admin dashboard — with cross-validated resolution and automatic reopening at J+7.","k76":"Full Stack development · team of two","k77":"Practice","k78":"MVVM · 160 automated tests · Git collaboration","k79":"04 — Experience","k80":"Aug 2025 — Present","k81":"Jan 2025 — Feb 2025","k82":"ERPNext Integration","k83":"Academic & personal projects","k84":"Web, AI, desktop and mobile software","k85":"Education & Certifications","k86":"Licence in Web & Design","k87":"Let’s build something great.","k88":"I’m open to Full Stack, software and AI opportunities, both on-site and remote.","k89":"Aina Yohan Rakotoarison · Full Stack Developer"}, fr: {"cvView":"Voir mon CV","cvOpen":"Ouvrir dans un onglet","cvDownload":"Télécharger","cvClose":"Fermer","k0":"Accueil","k1":"À propos","k2":"Compétences","k3":"Projets","k4":"Expérience","k5":"Discutons","k6":"Développeur Full Stack","k7":"Je conçois des logiciels complets — de l’interface à l’API, jusqu’à la base de données et l’IA qui les anime.","k8":"Développeur Full Stack, je crée des applications web, desktop et mobiles, des API REST et des solutions basées sur l’IA.","k9":"Voir mes projets","k10":"Me contacter","k11":"Me contacter","k12":"01 — À propos","k13":"À propos de moi","k14":"Je suis développeur Full Stack, passionné par le développement logiciel, l’intelligence artificielle et les technologies émergentes.","k15":"J’aime concevoir des solutions complètes : des interfaces utilisateur aux systèmes backend, en passant par les bases de données, les API et les intégrations d’IA.","k16":"Développement Full Stack","k17":"IA & LLM","k18":"02 — Compétences","k19":"Stack technique","k20":"Regroupés par couche — les outils que j’utilise pour mener un produit de l’interface à l’infrastructure.","k21":"Bases de données","k22":"IA","k23":"Outils & architecture","k24":"Intégration LLM","k25":"03 — Projets","k26":"Projets sélectionnés","k27":"Cinq projets web, IA, desktop et mobile — chacun construit de bout en bout.","k28":"Site web · Full Stack","k29":"Un projet web réalisé de A à Z — responsable à la fois du développement et de la partie visuelle du site.","k30":"Rôle","k31":"Développement Full Stack & design visuel","k32":"Voir le projet","k33":"Site en ligne","k34":"Plateforme Full Stack","k35":"Plateforme de gestion de centre commercial","k36":"Une plateforme MERN pour gérer un centre commercial — boutiques, produits, utilisateurs et commandes derrière une API REST authentifiée.","k37":"Développement Full Stack","k38":"Périmètre","k39":"API REST · Authentification · Utilisateurs · Boutiques · Produits · Commandes","k40":"Voir l’étude de cas","k41":"Démo en ligne","k42":"Pipeline RAG","k43":"100 % en local","k44":"Posez une question à vos documents…","k45":"Extraction des documents","k46":"Découpage","k47":"Embeddings multilingues","k48":"Vecteurs","k49":"Recherche sémantique","k50":"Réponse du LLM","k51":"Attribution des sources","k52":"Passages cités","k53":"IA · RAG","k54":"Assistant documentaire IA local","k55":"Un assistant documentaire privé, propulsé par le RAG.","k56":"Interrogez vos propres fichiers PDF, TXT et Markdown en langage naturel — grâce à une architecture RAG qui fonctionne entièrement sur votre machine.","k57":"Conception & développement","k58":"Vues PyQt6","k59":"Recherche & filtres","k60":"Lecteur libVLC","k61":"Gestionnaire de téléchargements","k62":"Traitements parallèles","k63":"Mise à jour auto","k64":"Données","k65":"Client API REST","k66":"Desktop · Reverse engineering","k67":"StreamYo","k68":"Un client desktop Windows conçu après le reverse engineering d’une application Android — APK, communications réseau et API. Python / PyQt6, lecteur libVLC, téléchargements avec reprise, SQLite, proxy HTTP local et mise à jour automatique.","k69":"Reverse engineering & développement desktop","k70":"Écosystème","k71":"App mobile","k72":"Base de données","k73":"Synchronisation","k74":"Tâches planifiées","k75":"Une application citoyenne de signalement des infrastructures publiques : app Android offline-first, API REST sur PostgreSQL et dashboard admin React, avec validation croisée et réouverture automatique à J+7.","k76":"Développement Full Stack · binôme","k77":"Pratiques","k78":"MVVM · 160 tests automatisés · Collaboration Git","k79":"04 — Expérience","k80":"Août 2025 — Aujourd’hui","k81":"Janv. 2025 — Févr. 2025","k82":"Intégration ERPNext","k83":"Projets académiques & personnels","k84":"Logiciels web, IA, desktop et mobile","k85":"Formation & certifications","k86":"Licence Web & Design","k87":"Construisons quelque chose de grand.","k88":"Je suis ouvert aux opportunités Full Stack, logiciel et IA, sur site comme à distance.","k89":"Aina Yohan Rakotoarison · Développeur Full Stack"} };
+const LIGHT = {"--color-bg":"oklch(0.93 0.006 240)","--color-surface":"oklch(0.975 0.004 240)","--color-text":"oklch(0.25 0.008 240)","--color-divider":"color-mix(in srgb, oklch(0.25 0.008 240) 14%, transparent)","--color-neutral-100":"oklch(0.25 0.008 240)","--color-neutral-200":"oklch(0.27 0.008 240)","--color-neutral-300":"oklch(0.32 0.008 240)","--color-neutral-400":"oklch(0.39 0.008 240)","--color-neutral-500":"oklch(0.45 0.008 240)","--color-neutral-600":"oklch(0.55 0.008 240)","--color-neutral-700":"oklch(0.77 0.008 240)","--color-neutral-800":"oklch(0.86 0.008 240)","--color-neutral-900":"oklch(0.92 0.008 240)","--shadow-sm":"0 0 0 1px oklch(0.86 0.008 240)","--shadow-md":"0 0 0 1px oklch(0.77 0.008 240), 0 6px 18px rgba(20,24,32,0.10)","--shadow-lg":"0 0 0 1px oklch(0.67 0.008 240), 0 16px 40px rgba(20,24,32,0.14)","--color-accent":"oklch(0.44 0.09 200)","--color-accent-2":"oklch(0.44 0.09 200)","--color-section":"oklch(0.88 0.05 195)","--color-section-glow":"oklch(0.94 0.03 195)","--color-accent-100":"oklch(0.28 0.05 200)","--color-accent-2-100":"oklch(0.27 0.04 195)","--color-accent-200":"oklch(0.34 0.07 200)","--color-accent-2-200":"oklch(0.37 0.06 195)","--color-accent-300":"oklch(0.40 0.08 200)","--color-accent-2-300":"oklch(0.48 0.08 195)","--color-accent-400":"oklch(0.6 0.1 195)","--color-accent-2-400":"oklch(0.6 0.1 195)","--color-accent-500":"oklch(0.6 0.1 195)","--color-accent-2-500":"oklch(0.6 0.1 195)","--color-accent-600":"oklch(0.8 0.1 195)","--color-accent-2-600":"oklch(0.8 0.1 195)","--color-accent-700":"oklch(0.87 0.07 195)","--color-accent-2-700":"oklch(0.87 0.07 195)","--color-accent-800":"oklch(0.93 0.04 195)","--color-accent-2-800":"oklch(0.93 0.04 195)","--color-accent-900":"oklch(0.95 0.025 195)","--color-accent-2-900":"oklch(0.95 0.025 195)"};
+const DARK = {"--color-bg":"oklch(0.19 0.008 250)","--color-surface":"oklch(0.245 0.01 250)","--color-accent":"oklch(0.76 0.11 195)","--color-accent-2":"oklch(0.76 0.11 195)","--color-section":"oklch(0.28 0.045 215)","--color-section-glow":"oklch(0.36 0.06 205)","--color-accent-100":"oklch(0.97 0.02 195)","--color-accent-2-100":"oklch(0.97 0.02 195)","--color-accent-200":"oklch(0.93 0.04 195)","--color-accent-2-200":"oklch(0.93 0.04 195)","--color-accent-300":"oklch(0.87 0.07 195)","--color-accent-2-300":"oklch(0.87 0.07 195)","--color-accent-400":"oklch(0.8 0.1 195)","--color-accent-2-400":"oklch(0.8 0.1 195)","--color-accent-500":"oklch(0.7 0.11 195)","--color-accent-2-500":"oklch(0.7 0.11 195)","--color-accent-600":"oklch(0.6 0.1 195)","--color-accent-2-600":"oklch(0.6 0.1 195)","--color-accent-700":"oklch(0.48 0.08 195)","--color-accent-2-700":"oklch(0.48 0.08 195)","--color-accent-800":"oklch(0.37 0.06 195)","--color-accent-2-800":"oklch(0.37 0.06 195)","--color-accent-900":"oklch(0.27 0.04 195)","--color-accent-2-900":"oklch(0.27 0.04 195)","--color-text":"oklch(0.94 0.004 240)","--color-divider":"color-mix(in srgb, oklch(0.94 0.004 240) 16%, transparent)","--shadow-sm":"0 0 0 1px oklch(0.37 0.008 240)","--shadow-md":"0 0 0 1px oklch(0.47 0.008 240), 0 6px 18px rgba(0,0,0,0.55)","--shadow-lg":"0 0 0 1px oklch(0.67 0.008 240), 0 16px 40px rgba(0,0,0,0.65)","--color-neutral-100":"oklch(0.97 0.008 240)","--color-neutral-200":"oklch(0.92 0.008 240)","--color-neutral-300":"oklch(0.86 0.008 240)","--color-neutral-400":"oklch(0.77 0.008 240)","--color-neutral-500":"oklch(0.67 0.008 240)","--color-neutral-600":"oklch(0.57 0.008 240)","--color-neutral-700":"oklch(0.47 0.008 240)","--color-neutral-800":"oklch(0.37 0.008 240)","--color-neutral-900":"oklch(0.27 0.008 240)"};
+function loadPrefs() { try { return JSON.parse(localStorage.getItem('ayr-prefs')) || {}; } catch (e) { return {}; } }
+function applyPrefs(p) {
+  const r = document.documentElement;
+  const vars = p.theme === 'light' ? LIGHT : DARK;
+  new Set([...Object.keys(LIGHT), ...Object.keys(DARK)]).forEach(k => vars[k] ? r.style.setProperty(k, vars[k]) : r.style.removeProperty(k));
+  r.style.colorScheme = p.theme === 'light' ? 'light' : 'dark';
+  r.lang = p.lang;
+  try { localStorage.setItem('ayr-prefs', JSON.stringify(p)); } catch (e) {}
+}
+function prefVals(self) {
+  const { lang, theme } = self.state;
+  const on = 'var(--color-accent-800)', onC = 'var(--color-accent-100)', offC = 'var(--color-neutral-400)';
+  const set = o => self.setState(o, () => applyPrefs({ lang: self.state.lang, theme: self.state.theme }));
+  return {
+    enOn: String(lang === 'en'), frOn: String(lang === 'fr'),
+    enBg: lang === 'en' ? on : 'transparent', frBg: lang === 'fr' ? on : 'transparent',
+    enColor: lang === 'en' ? onC : offC, frColor: lang === 'fr' ? onC : offC,
+    setEn: () => set({ lang: 'en' }), setFr: () => set({ lang: 'fr' }),
+    toggleTheme: () => set({ theme: theme === 'light' ? 'dark' : 'light' }),
+    themeIcon: theme === 'light' ? 'ph ph-moon' : 'ph ph-sun',
+    themeLabel: lang === 'fr' ? (theme === 'light' ? 'Mode sombre' : 'Mode clair') : (theme === 'light' ? 'Dark mode' : 'Light mode'),
+    langLabel: lang === 'fr' ? 'Langue' : 'Language',
+  };
+}
+class Component extends DCLogic {
+  state = { cvOpen: false, w: window.innerWidth, active: 'home', scrolled: false, menu: false, lang: loadPrefs().lang || ((navigator.language || '').startsWith('fr') ? 'fr' : 'en'), theme: loadPrefs().theme || 'dark' };
+  componentDidMount() {
+    applyPrefs({ lang: this.state.lang, theme: this.state.theme });
+    this.onResize = () => this.setState({ w: window.innerWidth, menu: window.innerWidth >= 1120 ? false : this.state.menu });
+    this.onScroll = () => { const s = window.scrollY > 8; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
+    addEventListener('resize', this.onResize);
+    addEventListener('scroll', this.onScroll, { passive: true });
+    this.t = setTimeout(() => this.observe(), 80);
+  }
+  componentWillUnmount() {
+    removeEventListener('resize', this.onResize);
+    removeEventListener('scroll', this.onScroll);
+    clearTimeout(this.t);
+    this.io && this.io.disconnect();
+    this.nav && this.nav.disconnect();
+  }
+  observe() {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      this.io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.translate = '0 0'; this.io.unobserve(e.target); }
+      }), { threshold: 0.12 });
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < innerHeight * 0.9) return;
+        el.style.opacity = '0'; el.style.translate = '0 22px';
+        el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + 'opacity 800ms cubic-bezier(.2,.7,.2,1), translate 800ms cubic-bezier(.2,.7,.2,1)';
+        this.io.observe(el);
+      });
+    }
+    this.nav = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) this.setState({ active: e.target.id }); }), { rootMargin: '-45% 0px -50% 0px' });
+    ['home', 'about', 'stack', 'work', 'experience', 'contact'].forEach(id => { const el = document.getElementById(id); el && this.nav.observe(el); });
+  }
+  renderVals() {
+    const { w, active, scrolled, menu } = this.state;
+    const cur = {};
+    ['home', 'about', 'stack', 'work', 'experience', 'contact'].forEach(k => { cur[k] = active === k ? 'page' : undefined; });
+    return {
+      ...prefVals(this),
+      t: I18N[this.state.lang],
+      cur,
+      desktopNav: w >= 1120,
+      mobileNav: w < 1120,
+      menuOpen: menu && w < 1120,
+      menuIcon: menu ? 'ph ph-x' : 'ph ph-list',
+      navBorder: scrolled || menu ? 'var(--color-divider)' : 'transparent',
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+      cvOpen: this.state.cvOpen,
+      openCv: () => { this.setState({ cvOpen: true, menu: false }); document.body.style.overflow = 'hidden'; if (!this._esc) { this._esc = e => e.key === 'Escape' && this.state.cvOpen && (this.setState({ cvOpen: false }), document.body.style.overflow = ''); window.addEventListener('keydown', this._esc); } },
+      closeCv: () => { this.setState({ cvOpen: false }); document.body.style.overflow = ''; },
+      stop: e => e.stopPropagation(),
+      cvRadius: w < 640 ? '0' : 'var(--radius-lg)',
+      labelDisplay: w < 640 ? 'none' : 'inline',
+    };
+  }
+}
+</script>
+</body>
+</html>
