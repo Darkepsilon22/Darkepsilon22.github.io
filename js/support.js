@@ -1579,8 +1579,10 @@
       const cls = "scp" + (n++).toString(36);
       const isPseudoElement = pseudo === "before" || pseudo === "after";
       const sel = isPseudoElement ? "." + cls + "::" + pseudo : "." + cls + ":" + pseudo;
+      const rule = sel + "{" + (isPseudoElement ? css : importantify(css)) + "}";
+      // Touch screens keep :hover stuck after a tap (cards jump while scrolling) — hover only where a real pointer exists.
       el.sheet.insertRule(
-        sel + "{" + (isPseudoElement ? css : importantify(css)) + "}",
+        pseudo === "hover" ? "@media (hover:hover) and (pointer:fine){" + rule + "}" : rule,
         el.sheet.cssRules.length
       );
       cache.set(k, cls);
