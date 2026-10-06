@@ -20,13 +20,14 @@
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased;
-  background: radial-gradient(1200px 720px at 82% -160px, color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%) no-repeat, var(--color-bg); min-height: 100vh; }
+  background: radial-gradient(1200px 720px at 82% -160px, color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%) no-repeat, var(--color-bg); min-height: 100vh; overflow-x: clip; }
 a { color: var(--color-text); text-decoration: none; }
-a:hover { color: var(--color-accent); }
+@media (hover: hover) { a:hover { color: var(--color-accent); } }
+.top-bar { transform: translateZ(0); }
 </style>
 </helmet>
 
-<div style="position:fixed;top:0;left:0;right:0;z-index:50;background:color-mix(in srgb, var(--color-bg) 78%, transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid {{ navBorder }};transition:border-color 300ms ease">
+<div class="top-bar" style="position:fixed;top:0;left:0;right:0;z-index:50;background:color-mix(in srgb, var(--color-bg) 78%, transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid {{ navBorder }};transition:border-color 300ms ease">
   <nav class="nav" style="max-width:1200px;margin:0 auto;padding:14px clamp(20px,5vw,72px);gap:20px">
     <a href="#home" class="nav-brand" style="display:flex;align-items:center;gap:10px;font-size:15px;color:var(--color-text)">
       <span style="display:grid;place-items:center;width:30px;height:30px;border-radius:var(--radius-md);box-shadow:inset 0 0 0 1px var(--color-accent);color:var(--color-accent);font-size:12px;letter-spacing:0.04em">AY</span>
@@ -443,7 +444,8 @@ class Component extends DCLogic {
   state = { cvOpen: false, w: window.innerWidth, active: 'home', scrolled: false, menu: false, lang: loadPrefs().lang || ((navigator.language || '').startsWith('fr') ? 'fr' : 'en'), theme: loadPrefs().theme || 'dark' };
   componentDidMount() {
     applyPrefs({ lang: this.state.lang, theme: this.state.theme });
-    this.onResize = () => this.setState({ w: window.innerWidth, menu: window.innerWidth >= 1120 ? false : this.state.menu });
+    // Mobile browsers fire resize when the address bar shows/hides while scrolling — only re-render on a real width change.
+    this.onResize = () => { const w = window.innerWidth; if (w !== this.state.w) this.setState({ w, menu: w >= 1120 ? false : this.state.menu }); };
     this.onScroll = () => { const s = window.scrollY > 8; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
     addEventListener('resize', this.onResize);
     addEventListener('scroll', this.onScroll, { passive: true });
@@ -470,7 +472,7 @@ class Component extends DCLogic {
         this.io.observe(el);
       });
     }
-    this.nav = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) this.setState({ active: e.target.id }); }), { rootMargin: '-45% 0px -50% 0px' });
+    this.nav = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && e.target.id !== this.state.active) this.setState({ active: e.target.id }); }), { rootMargin: '-45% 0px -50% 0px' });
     ['home', 'about', 'stack', 'work', 'experience', 'contact'].forEach(id => { const el = document.getElementById(id); el && this.nav.observe(el); });
   }
   renderVals() {
