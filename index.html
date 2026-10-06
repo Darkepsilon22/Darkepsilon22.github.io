@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="js/support.js"></script>
+<script src="js/support.js?v=2"></script>
 </head>
 <body>
 <x-dc>
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/nocturne.css">
 <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <script src="js/nocturne-bundle.js"></script>
-<script src="js/image-slot.js"></script>
+<script src="js/image-slot.js?v=2"></script>
 <style>
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -463,12 +463,15 @@ class Component extends DCLogic {
     if (!reduce) {
       this.io = new IntersectionObserver(es => es.forEach(e => {
         if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.translate = '0 0'; this.io.unobserve(e.target); }
-      }), { threshold: 0.12 });
+      // threshold 0 + rootMargin: reveal as soon as the top edge enters the screen — a ratio threshold left tall
+      // project blocks (≈1500px on mobile) blank for ~180px of scrolling, then made them jump in.
+      }), { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+      const small = innerWidth < 760;
       document.querySelectorAll('[data-reveal]').forEach(el => {
         const r = el.getBoundingClientRect();
         if (r.top < innerHeight * 0.9) return;
-        el.style.opacity = '0'; el.style.translate = '0 22px';
-        el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + 'opacity 800ms cubic-bezier(.2,.7,.2,1), translate 800ms cubic-bezier(.2,.7,.2,1)';
+        el.style.opacity = '0'; el.style.translate = small ? '0 10px' : '0 22px';
+        el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + (small ? 'opacity 450ms ease-out, translate 450ms ease-out' : 'opacity 800ms cubic-bezier(.2,.7,.2,1), translate 800ms cubic-bezier(.2,.7,.2,1)');
         this.io.observe(el);
       });
     }
