@@ -22,6 +22,11 @@ body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased;
 a { color: var(--color-text); text-decoration: none; }
 @media (hover: hover) { a:hover { color: var(--color-accent); } }
 .top-bar { transform: translateZ(0); }
+/* Touch devices: a live backdrop blur re-samples everything scrolling under the bar each frame — the main cause of scroll jank on phones. */
+@media (hover: none), (max-width: 760px) {
+  .top-bar { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: color-mix(in srgb, var(--color-bg) 96%, transparent) !important; }
+  .bottom-bar { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: var(--color-surface) !important; }
+}
 </style>
 </helmet>
 
@@ -171,7 +176,7 @@ a { color: var(--color-text); text-decoration: none; }
   <span>© 2026</span>
 </footer>
 <sc-if value="{{ mobileBar }}" hint-placeholder-val="{{ false }}">
-  <div style="position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:flex;gap:8px;padding:8px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 92%, transparent);backdrop-filter:blur(12px);box-shadow:var(--shadow-md)">
+  <div class="bottom-bar" style="position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:flex;gap:8px;padding:8px;border-radius:var(--radius-lg);background:color-mix(in srgb, var(--color-surface) 92%, transparent);backdrop-filter:blur(12px);box-shadow:var(--shadow-md)">
     <a href="{{ p.live }}" target="_blank" rel="noopener" class="btn btn-primary" style="white-space:nowrap;flex-shrink:0;flex:1;min-height:44px">{{ ui.visit }} <i class="ph ph-arrow-up-right"></i></a>
     <a href="index.html#contact" class="btn btn-secondary" style="white-space:nowrap;flex-shrink:0;flex:1;min-height:44px;color:var(--color-text)">{{ ui.contact }}</a>
   </div>
@@ -263,6 +268,8 @@ class Component extends DCLogic {
     addEventListener('resize', this.onResize);
     this.t = setTimeout(() => {
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      // No reveal on touch / small screens: fading in large blocks mid-scroll is too heavy for phone GPUs.
+      if (matchMedia('(hover: none)').matches || innerWidth < 760) return;
       this.io = new IntersectionObserver(es => es.forEach(e => {
         if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.translate = '0 0'; this.io.unobserve(e.target); }
       // threshold 0 + rootMargin: reveal as soon as the top edge enters the screen — a ratio threshold left tall blocks blank on mobile.

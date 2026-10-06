@@ -24,6 +24,10 @@ body { margin: 0; text-wrap: pretty; -webkit-font-smoothing: antialiased;
 a { color: var(--color-text); text-decoration: none; }
 @media (hover: hover) { a:hover { color: var(--color-accent); } }
 .top-bar { transform: translateZ(0); }
+/* Touch devices: a live backdrop blur re-samples everything scrolling under the bar each frame — the main cause of scroll jank on phones. */
+@media (hover: none), (max-width: 760px) {
+  .top-bar { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: color-mix(in srgb, var(--color-bg) 96%, transparent) !important; }
+}
 </style>
 </helmet>
 
@@ -460,7 +464,9 @@ class Component extends DCLogic {
   }
   observe() {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce) {
+    // No reveal on touch / small screens: fading in ~1500px-tall project blocks mid-scroll is too heavy for phone GPUs.
+    const touch = matchMedia('(hover: none)').matches || innerWidth < 760;
+    if (!reduce && !touch) {
       this.io = new IntersectionObserver(es => es.forEach(e => {
         if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.translate = '0 0'; this.io.unobserve(e.target); }
       // threshold 0 + rootMargin: reveal as soon as the top edge enters the screen — a ratio threshold left tall
